@@ -40,7 +40,7 @@ stages:
       inputs:
         script: |
           docker system prune -f --all
-          docker build -t myimage:1.06 multicloudcontainer24registry.azurecr.io/samplewebapp:$(Build.BuildId) .
+          docker build -t multicloudcontainer24registry.azurecr.io/samplewebapp:$(Build.BuildId) .
           trivy image --exit-code 0 --severity MEDIUM,HIGH multicloudcontainer24registry.azurecr.io/samplewebapp:$(Build.BuildId)
          #trivy image --exit-code 1 --severity CRITICAL multicloudcontainer24registry.azurecr.io/samplewebapp:$(Build.BuildId)
     - task: Docker@2
