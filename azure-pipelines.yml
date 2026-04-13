@@ -66,8 +66,7 @@ stages:
           - task: CmdLine@2
             inputs:
               script: |
-                helm repo add folo https://github.com/singhritesh85/helm-repo-for-ArgoCD
-                helm repo update
+                git clone https://github.com/singhritesh85/helm-repo-for-ArgoCD.git
           - task: HelmDeploy@0
             inputs:
               connectionType: 'Azure Resource Manager'
@@ -77,7 +76,7 @@ stages:
               namespace: 'three-tier-webapp'
               command: 'upgrade'
               chartType: 'FilePath'
-              chartPath: 'folo'
+              chartPath: 'helm-repo-for-ArgoCD/folo'
               releaseName: 'threetierwebapp'
               overrideValues: 'imagePullSecrets[0].name=devopsmelacr132827a7-auth,image.repository=multicloudcontainer24registry.azurecr.io/samplewebapp,image.tag=$(Build.BuildId),replicaCount=1,service.type=ClusterIP,service.port=80'
               recreate: true
