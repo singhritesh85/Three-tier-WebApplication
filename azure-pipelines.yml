@@ -4,6 +4,9 @@ trigger:
 resources:
 - repo: self
 
+variables:
+  imagePullSecret: 'devopsmelacr132827a7-auth'
+
 pool:
   name: demo
   demands:
@@ -76,6 +79,6 @@ stages:
               chartType: 'FilePath'
               chartPath: 'folo'
               releaseName: 'threetierwebapp'
-              overrideValues: 'image.repository=multicloudcontainer24registry.azurecr.io/samplewebapp,image.tag=$(Build.BuildId),replicaCount=1,service.type=ClusterIP,service.port=80'
+              overrideValues: 'imagePullSecrets[0].name=devopsmelacr132827a7-auth,image.repository=multicloudcontainer24registry.azurecr.io/samplewebapp,image.tag=$(Build.BuildId),replicaCount=1,service.type=ClusterIP,service.port=80'
               recreate: true
               arguments: '--install --create-namespace'
