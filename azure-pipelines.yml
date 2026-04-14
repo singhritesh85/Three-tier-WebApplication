@@ -4,9 +4,6 @@ trigger:
 resources:
 - repo: self
 
-variables:
-  imagePullSecret: 'devopsmelacr132827a7-auth'
-
 pool:
   name: demo
   demands:
@@ -48,7 +45,7 @@ stages:
          #trivy image --exit-code 1 --severity CRITICAL multicloudcontainer24registry.azurecr.io/samplewebapp:$(Build.BuildId)
     - task: Docker@2
       inputs:
-        containerRegistry: 'DockerRegistryServiceConnection'
+        containerRegistry: ''
         repository: 'samplewebapp'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
@@ -78,6 +75,6 @@ stages:
               chartType: 'FilePath'
               chartPath: 'helm-repo-for-ArgoCD/folo'
               releaseName: 'threetierwebapp'
-              overrideValues: 'imagePullSecrets[0].name=devopsmelacr132827a7-auth,image.repository=multicloudcontainer24registry.azurecr.io/samplewebapp,image.tag=$(Build.BuildId),replicaCount=1,service.type=ClusterIP,service.port=80'
+              overrideValues: 'image.repository=multicloudcontainer24registry.azurecr.io/samplewebapp,image.tag=$(Build.BuildId),replicaCount=1,service.type=ClusterIP,service.port=80'
               recreate: true
               arguments: '--install --create-namespace'
